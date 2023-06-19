@@ -12,18 +12,16 @@ It's like adding a thumb on the scale to tip the balance in favour of certain wo
 
 Imagine we have a prompt that says `"Hello, my name is "` as a prompt. With a little bias magic, we can influence the story:
 
-- Without bias: `{}`
+- Without bias: `{}` <br>
     Output: `"iam samuel sailor"`
-- Bias towards `{"Greg": +6}`
+- Bias towards `{"Greg": +6}` <br>
     Output: `"Greg Gregg"`
-- Higher bias towards `{"Greg": +13.37}`
+- Higher bias towards `{"Greg": +13.37}` <br>
     Output: `"Greg Greg Greg Greg Greg Greg Greg Greg..."`
 
 <p align="center">
   <img src="https://media.tenor.com/xFtLd_pUrkcAAAAC/succession-greg.gif" alt=Greg" width="600px" />
 </p>
-
-See that? It's like having a "Greg" generator! 😂
 
 ## Unraveling Logits and Bias 📊🎩
 
