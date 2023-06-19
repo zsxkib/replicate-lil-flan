@@ -212,7 +212,8 @@ class Predictor(BasePredictor):
 
         inputs = self.tokenizer(prompt, return_tensors="pt").input_ids
         logits_processor_list = None
-        if bias_dict_str is not None or bias_dict_str != "{}":
+
+        if (trimmed_bias_dict_str := bias_dict_str.strip()) and trimmed_bias_dict_str != "{}":
             word_to_bias_dict = json5.loads(bias_dict_str)
             tokenid_to_bias_dict = self.map_tokens_to_bias(word_to_bias_dict)
             bias_warper = BiasLogitsWarper(tokenid_to_bias_dict)
