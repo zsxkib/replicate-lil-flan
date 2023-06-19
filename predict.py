@@ -101,6 +101,8 @@ class BiasLogitsWarper(LogitsWarper):
             if abs(bias_value) == 100:
                 # Set logit to extremely high or low value
                 new_logit = float("inf") if bias_value > 0 else -float("inf")
+                # NOTE: A logit of -∞ (negative infinity) would result in a probability of 0 after applying the softmax function, effectively banning that token.
+                # A logit of 0 would result in a non-zero probability after applying the softmax function (the exact value depends on the other logits), so the token could still appear in the output.
                 inf_indices.append(token_id)
                 biases[..., token_id] = new_logit
             else:
@@ -132,6 +134,8 @@ class BiasLogitsWarper(LogitsWarper):
             if abs(bias_value) == 100:
                 # Set logit to extremely high or low value
                 new_logit = float("inf") if bias_value > 0 else -float("inf")
+                # NOTE: A logit of -∞ (negative infinity) would result in a probability of 0 after applying the softmax function, effectively banning that token.
+                # A logit of 0 would result in a non-zero probability after applying the softmax function (the exact value depends on the other logits), so the token could still appear in the output.
                 logits[..., token_id] = new_logit
             else:
                 # Add bias to logit
@@ -156,6 +160,7 @@ class Predictor(BasePredictor):
     def map_tokens_to_bias(self, bias_dict_str: Dict[str, float]) -> Dict[int, float]:
         """
         Maps a dictionary with strings as keys to a dictionary with corresponding token IDs as keys.
+        Unknown words will get mapped to the unknown token id <unk>.
 
         Parameters
         ----------
@@ -192,7 +197,7 @@ class Predictor(BasePredictor):
         ),
         bias_dict_str: str = Input(
             description="Dictionary mapping from strings to bias values",
-            default="{"+"}",
+            default="{}",
             min_length=0,
             max_length=512,
         ),
@@ -207,7 +212,7 @@ class Predictor(BasePredictor):
 
         inputs = self.tokenizer(prompt, return_tensors="pt").input_ids
         logits_processor_list = None
-        if bias_dict_str is not None:
+        if bias_dict_str is not None or bias_dict_str != "{}":
             word_to_bias_dict = json5.loads(bias_dict_str)
             tokenid_to_bias_dict = self.map_tokens_to_bias(word_to_bias_dict)
             bias_warper = BiasLogitsWarper(tokenid_to_bias_dict)
