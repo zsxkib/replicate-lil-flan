@@ -1,10 +1,10 @@
 # **Exploring Bias Logit Warping** 🎯🚀
 
+Ever wondered how to make a language model dance to your tune? Welcome aboard the spaceship of Bias Logit Warping, your magic wand for gaining razor-sharp control over a language model's responses. It's a game-changer that lets you tinker with output probabilities for specific words or phrases, creating a tailor-made text-generation experience.
+
 <p align="center">
   <img src="https://cdn.discordapp.com/attachments/847959427424452639/1120352071128977408/Screen_Recording_2023-06-17_at_23.57.01.gif" alt="Softmax applied to logits" width="600px" />
 </p>
-
-Ever wondered how to make a language model dance to your tune? Welcome aboard the spaceship of Bias Logit Warping, your magic wand for gaining razor-sharp control over a language model's responses. It's a game-changer that lets you tinker with output probabilities for specific words or phrases, creating a tailor-made text-generation experience.
 
 It's like adding a thumb on the scale to tip the balance in favour of certain words.
 
